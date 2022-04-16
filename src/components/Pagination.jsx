@@ -1,5 +1,10 @@
 import React, { useState } from "react";
-import { MdNavigateNext, MdNavigateBefore } from "react-icons/md";
+import {
+  FaAngleDoubleLeft,
+  FaAngleDoubleRight,
+  FaAngleRight,
+  FaAngleLeft,
+} from "react-icons/fa";
 
 function Pagination({ usersPerPage, totalUsers, paginate }) {
   const [activePage, setActivePage] = useState(1);
@@ -11,22 +16,39 @@ function Pagination({ usersPerPage, totalUsers, paginate }) {
     <div className="w-full flex justify-center items-center p-2">
       <button
         disabled={activePage === 1}
-        onClick={() => setActivePage(activePage - 1)}
-        className={`p-2 h-10 rounded-md ${
+        onClick={() => {
+          setActivePage(1);
+          paginate(1);
+        }}
+        className={`p-2 mx-2 h-10 w-10 rounded-md ${
           activePage > 1
             ? `hover:bg-blue-500 hover:text-white hover:shadow-md cursor-pointer`
             : "opacity-50"
         } flex justify-center items-center  transition duration-300`}
       >
-        <MdNavigateBefore />
+        <FaAngleDoubleLeft />
+      </button>
+      <button
+        disabled={activePage === 1}
+        onClick={() => {
+          setActivePage(activePage - 1);
+          paginate(activePage - 1);
+        }}
+        className={`mx-2 p-2 h-10 rounded-md ${
+          activePage > 1
+            ? `hover:bg-blue-500 hover:text-white hover:shadow-md cursor-pointer`
+            : "opacity-50"
+        } flex justify-center items-center  transition duration-300`}
+      >
+        <FaAngleLeft />
         Prev
       </button>
       {pages.map((page) => (
         <span
           key={page}
           onClick={() => {
-            paginate(page);
             setActivePage(page);
+            paginate(page);
           }}
           className={`${
             activePage === page ? "bg-blue-500 text-white shadow-md" : ""
@@ -37,15 +59,32 @@ function Pagination({ usersPerPage, totalUsers, paginate }) {
       ))}
       <button
         disabled={activePage === pages.length}
-        onClick={() => setActivePage(activePage + 1)}
-        className={`p-2 h-10 rounded-md ${
+        onClick={() => {
+          setActivePage(activePage + 1);
+          paginate(activePage + 1);
+        }}
+        className={`mx-2 p-2 h-10 rounded-md ${
           activePage < pages.length
             ? `hover:bg-blue-500 hover:text-white hover:shadow-md cursor-pointer`
             : "opacity-50"
         } flex justify-center items-center  transition duration-300`}
       >
         Next
-        <MdNavigateNext />
+        <FaAngleRight />
+      </button>
+      <button
+        disabled={activePage === pages.length}
+        onClick={() => {
+          setActivePage(pages.length);
+          paginate(pages.length);
+        }}
+        className={`mx-2 p-2 h-10 w-10 rounded-md ${
+          activePage < pages.length
+            ? `hover:bg-blue-500 hover:text-white hover:shadow-md cursor-pointer`
+            : "opacity-50"
+        } flex justify-center items-center  transition duration-300`}
+      >
+        <FaAngleDoubleRight />
       </button>
     </div>
   );

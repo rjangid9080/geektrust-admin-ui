@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import Users from "./components/Users";
+import UsersList from "./components/UsersList";
 import Pagination from "./components/Pagination";
-//import Pagination from "./components/Pagination";
+import Search from "./components/Search";
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -29,7 +29,8 @@ function App() {
   const paginate = (page) => setCurrentPage(page);
   return (
     <div className="w-full">
-      <Users loading={loading} users={currentUsers} />
+      <Search />
+      <UsersList loading={loading} users={currentUsers} />
       <Pagination
         paginate={paginate}
         usersPerPage={usersPerPage}
