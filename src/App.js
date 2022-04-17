@@ -8,6 +8,7 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [users, setUsers] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [result, setResult] = useState([]);
   const usersPerPage = 10;
   const API =
     "https://geektrust.s3-ap-southeast-1.amazonaws.com/adminui-problem/members.json";
@@ -16,25 +17,34 @@ function App() {
       setLoading(true);
       const response = await axios.get(API);
       setUsers(response.data);
+      setResult(response.data)
       setLoading(false);
     };
     fetchData();
   }, []);
 
+  const deleteUser = (id) => {
+    setResult(result.filter((user) => user._id !== id));
+  };
+
   const indexOfLastUser = currentPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
-  const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
+  const currentUsers = result.slice(indexOfFirstUser, indexOfLastUser);
 
   //Paginate
   const paginate = (page) => setCurrentPage(page);
   return (
     <div className="w-full flex flex-col items-center">
-      <Search users={users} setUsers={setUsers} />
-      <UsersList loading={loading} users={currentUsers} />
+      <Search users={users} setSearchResult={setResult} />
+      <UsersList
+        loading={loading}
+        users={currentUsers}
+        deleteUser={deleteUser}
+      />
       <Pagination
         paginate={paginate}
         usersPerPage={usersPerPage}
-        totalUsers={users.length}
+        totalUsers={result.length}
       />
     </div>
   );

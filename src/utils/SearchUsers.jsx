@@ -1,6 +1,13 @@
 export default function SearchUsers(value, users) {
+  const search = value.toLowerCase();
   const searchedUsers = users.filter((user) => {
-    return user.name.toLowerCase().includes(value);
+    if (search !== "") {
+      return (
+        user.name.toLowerCase().includes(search)
+      );
+    } else {
+      return user;
+    }
   });
   return searchedUsers;
 }

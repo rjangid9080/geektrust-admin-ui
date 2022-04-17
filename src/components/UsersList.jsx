@@ -2,7 +2,7 @@ import Loader from "./Loader";
 import { FiEdit } from "react-icons/fi";
 import { MdDelete } from "react-icons/md";
 
-function Users({ users, loading }) {
+function Users({ users, loading, deleteUser }) {
   if (loading) {
     return <Loader />;
   }
@@ -29,33 +29,35 @@ function Users({ users, loading }) {
           </span>
           <span className="w-3/4 flex">
             <input
-              className="w-1/4 px-4 py-1 font-semibold"
+              className="w-1/4 px-4 py-1 font-semibold outline-none"
               type="text"
               defaultValue={user.name}
               readOnly
             />
             <input
-              className="w-1/4 px-4 py-1 font-semibold"
+              className="w-1/4 px-4 py-1 font-semibold outline-none"
               type="text"
               defaultValue={user.email}
               readOnly
             />
             <input
-              className="w-1/4 px-4 py-1 font-semibold "
+              className="w-1/4 px-4 py-1 font-semibold outline-none "
               type="text"
               defaultValue={user.role}
               readOnly
             />
-            <span className="flex items-center px-4 text-xl text-gray-600 hover:text-black cursor-pointer">
+            <span className="flex items-center px-4 text-xl text-gray-600 hover:text-blue-600 transition duration-300 cursor-pointer">
               <FiEdit />
             </span>
-            <span className="flex items-center px-4 text-red-500 text-2xl cursor-pointer hover:text-red-600">
+            <span
+              className="flex items-center px-4 text-red-500 text-2xl cursor-pointer hover:text-red-600 transition duration-300"
+            >
               <MdDelete />
             </span>
           </span>
         </div>
       ))}
-      <button className="mt-2 p-2 bg-red-500 hover:bg-red-600 shadow-md text-white text-xs font-semibold rounded-md">
+      <button className="mt-2 p-2 bg-red-500 hover:bg-red-600 shadow-md text-white text-xs font-semibold rounded-md transition duration-300">
         Delete Selected
       </button>
     </section>
