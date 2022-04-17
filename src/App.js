@@ -28,8 +28,8 @@ function App() {
   //Paginate
   const paginate = (page) => setCurrentPage(page);
   return (
-    <div className="w-full">
-      <Search />
+    <div className="w-full flex flex-col items-center">
+      <Search users={users} setUsers={setUsers} />
       <UsersList loading={loading} users={currentUsers} />
       <Pagination
         paginate={paginate}

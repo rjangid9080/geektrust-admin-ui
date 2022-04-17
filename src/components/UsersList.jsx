@@ -7,8 +7,8 @@ function Users({ users, loading }) {
     return <Loader />;
   }
   return (
-    <section className="w-full">
-      <div className="w-full flex border border-b border-gray-200 p-2">
+    <section className="w-[90%] min-h-[580px]">
+      <div className="w-full flex p-2 shadow-md mt-2 text-blue-600">
         <span className="w-1/4 px-4 flex items-center">
           <input className="h-5 w-5" type="checkbox" />
         </span>
@@ -21,7 +21,7 @@ function Users({ users, loading }) {
       </div>
       {users.map((user) => (
         <div
-          className="w-full flex border border-b border-gray-200 p-2"
+          className="w-full flex text-sm p-2 shadow-md mt-1 transition-all duration-500"
           key={user.id}
         >
           <span className="w-1/4 px-4 flex items-center">
@@ -29,19 +29,19 @@ function Users({ users, loading }) {
           </span>
           <span className="w-3/4 flex">
             <input
-              className="w-1/4 px-4 py-1"
+              className="w-1/4 px-4 py-1 font-semibold"
               type="text"
               defaultValue={user.name}
               readOnly
             />
             <input
-              className="w-1/4 px-4 py-1"
+              className="w-1/4 px-4 py-1 font-semibold"
               type="text"
               defaultValue={user.email}
               readOnly
             />
             <input
-              className="w-1/4 px-4 py-1 "
+              className="w-1/4 px-4 py-1 font-semibold "
               type="text"
               defaultValue={user.role}
               readOnly
@@ -55,6 +55,9 @@ function Users({ users, loading }) {
           </span>
         </div>
       ))}
+      <button className="mt-2 p-2 bg-red-500 hover:bg-red-600 shadow-md text-white text-xs font-semibold rounded-md">
+        Delete Selected
+      </button>
     </section>
   );
 }

@@ -13,7 +13,7 @@ function Pagination({ usersPerPage, totalUsers, paginate }) {
     pages.push(i);
   }
   return (
-    <div className="w-full flex justify-center items-center p-2">
+    <div className="w-full flex justify-center items-center p-2 font-semibold text-sm">
       <button
         disabled={activePage === 1}
         onClick={() => {
@@ -31,14 +31,14 @@ function Pagination({ usersPerPage, totalUsers, paginate }) {
       <button
         disabled={activePage === 1}
         onClick={() => {
-          setActivePage(activePage - 1);
           paginate(activePage - 1);
+          setActivePage(activePage - 1);
         }}
         className={`mx-2 p-2 h-10 rounded-md ${
           activePage > 1
             ? `hover:bg-blue-500 hover:text-white hover:shadow-md cursor-pointer`
             : "opacity-50"
-        } flex justify-center items-center  transition duration-300`}
+        } flex justify-center items-center  transition duration-300 font-semibold text-sm`}
       >
         <FaAngleLeft />
         Prev
@@ -60,14 +60,14 @@ function Pagination({ usersPerPage, totalUsers, paginate }) {
       <button
         disabled={activePage === pages.length}
         onClick={() => {
-          setActivePage(activePage + 1);
           paginate(activePage + 1);
+          setActivePage(activePage + 1);
         }}
         className={`mx-2 p-2 h-10 rounded-md ${
           activePage < pages.length
             ? `hover:bg-blue-500 hover:text-white hover:shadow-md cursor-pointer`
             : "opacity-50"
-        } flex justify-center items-center  transition duration-300`}
+        } flex justify-center items-center  transition duration-300 font-semibold text-sm`}
       >
         Next
         <FaAngleRight />
