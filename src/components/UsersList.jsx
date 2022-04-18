@@ -3,7 +3,17 @@ import Loader from "./Loader";
 import { FiEdit } from "react-icons/fi";
 import { MdDelete, MdSave } from "react-icons/md";
 
-function Users({ users, loading, deleteUser, editUser, saveUser }) {
+function Users({
+  users,
+  loading,
+  deleteUser,
+  editUser,
+  saveUser,
+  selectUser,
+  deleteSelectedUser,
+  selectAll,
+  selectAllRef,
+}) {
   const nameRef = useRef(null);
   const emailRef = useRef(null);
   const roleRef = useRef(null);
@@ -15,7 +25,12 @@ function Users({ users, loading, deleteUser, editUser, saveUser }) {
     <section className="w-[90%] min-h-[580px]">
       <div className="w-full flex p-2 shadow-md mt-2 text-blue-600">
         <span className="w-1/4 px-4 flex items-center">
-          <input className="h-5 w-5" type="checkbox" />
+          <input
+            ref={selectAllRef}
+            className="h-5 w-5"
+            type="checkbox"
+            onChange={selectAll}
+          />
         </span>
         <ul className="w-3/4 flex">
           <li className="w-1/4 px-4 py-1 rounded-md font-semibold">Name</li>
@@ -24,13 +39,23 @@ function Users({ users, loading, deleteUser, editUser, saveUser }) {
           <li className="w-1/4 px-4 py-1 rounded-md font-semibold">Actions</li>
         </ul>
       </div>
+      {users.length === 0 && (
+        <div className="w-full flex text-sm font-semibold p-2 mt-1">
+          No User Found
+        </div>
+      )}
       {users.map((user) => (
         <div
           className="w-full flex text-sm p-2 shadow-md mt-1 transition-all duration-500"
           key={user.id}
         >
           <span className="w-1/4 px-4 flex items-center">
-            <input className="h-5 w-5" type="checkbox" />
+            <input
+              className="h-5 w-5"
+              type="checkbox"
+              onChange={() => selectUser(user.id)}
+              checked={user.selected}
+            />
           </span>
           <span className="w-3/4 flex">
             <input
@@ -87,9 +112,14 @@ function Users({ users, loading, deleteUser, editUser, saveUser }) {
           </span>
         </div>
       ))}
-      <button className="mt-2 p-2 bg-red-500 hover:bg-red-600 shadow-md text-white text-xs font-semibold rounded-md transition duration-300">
-        Delete Selected
-      </button>
+      {users.length !== 0 && (
+        <button
+          onClick={deleteSelectedUser}
+          className="mt-2 p-2 bg-red-500 hover:bg-red-600 shadow-md text-white text-xs font-semibold rounded-md transition duration-300"
+        >
+          Delete Selected
+        </button>
+      )}
     </section>
   );
 }

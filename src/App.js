@@ -1,17 +1,17 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import UsersList from "./components/UsersList";
 import Pagination from "./components/Pagination";
 import Search from "./components/Search";
-
+import { API } from "./api";
 function App() {
   const [loading, setLoading] = useState(false);
   const [users, setUsers] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [result, setResult] = useState([]);
   const usersPerPage = 10;
-  const API =
-    "https://geektrust.s3-ap-southeast-1.amazonaws.com/adminui-problem/members.json";
+  const selectAllRef = useRef(null);
+
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
@@ -30,24 +30,45 @@ function App() {
 
   const editUser = (id) => {
     const index = result.findIndex((user) => user.id === id);
-    // result[index].edit = !result[index].edit;
-    // setResult(result);
-    setResult([...result, (result[index].edit = true)]);
+    result[index].edit = !result[index].edit;
+    setResult([...result]);
   };
 
   const saveUser = (id, nameRef, emailRef, roleRef) => {
     const index = result.findIndex((user) => user.id === id);
-    setResult([
-      ...result,
-      (result[index].name = nameRef.current.value),
-      (result[index].email = emailRef.current.value),
-      (result[index].role = roleRef.current.value),
-      (result[index].edit = false),
-    ]);
+    result[index].name = nameRef.current.value;
+    result[index].email = emailRef.current.value;
+    result[index].role = roleRef.current.value;
+    result[index].edit = false;
+    setResult([...result]);
   };
-  
+
   const deleteUser = (id) => {
     setResult(result.filter((user) => user.id !== id));
+    selectAllRef.current.checked = false;
+  };
+
+  const selectUser = (id) => {
+    const index = result.findIndex((user) => user.id === id);
+    result[index].selected = !result[index].selected;
+    setResult([...result]);
+  };
+
+  const selectAll = () => {
+    let temp = result.slice(0, usersPerPage).map((user) => ({
+      ...user,
+      selected: true,
+    }));
+    let temp2 = result.slice(usersPerPage, result.length);
+    setResult([...temp, ...temp2]);
+    console.log(selectAllRef.current.checked);
+  };
+
+  const deleteSelectedUser = () => {
+    if (selectAllRef.current.checked) {
+      selectAllRef.current.checked = false;
+    }
+    setResult(result.filter((user) => user.selected === false));
   };
 
   const indexOfLastUser = currentPage * usersPerPage;
@@ -65,7 +86,12 @@ function App() {
         deleteUser={deleteUser}
         editUser={editUser}
         saveUser={saveUser}
+        selectUser={selectUser}
+        deleteSelectedUser={deleteSelectedUser}
+        selectAll={selectAll}
+        selectAllRef={selectAllRef}
       />
+
       <Pagination
         paginate={paginate}
         usersPerPage={usersPerPage}
