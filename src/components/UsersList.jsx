@@ -1,8 +1,13 @@
+import { useRef } from "react";
 import Loader from "./Loader";
 import { FiEdit } from "react-icons/fi";
-import { MdDelete } from "react-icons/md";
+import { MdDelete, MdSave } from "react-icons/md";
 
-function Users({ users, loading, deleteUser }) {
+function Users({ users, loading, deleteUser, editUser, saveUser }) {
+  const nameRef = useRef(null);
+  const emailRef = useRef(null);
+  const roleRef = useRef(null);
+
   if (loading) {
     return <Loader />;
   }
@@ -13,10 +18,10 @@ function Users({ users, loading, deleteUser }) {
           <input className="h-5 w-5" type="checkbox" />
         </span>
         <ul className="w-3/4 flex">
-          <li className="w-1/4 px-4 py-1 font-semibold">Name</li>
-          <li className="w-1/4 px-4 py-1 font-semibold">Email</li>
-          <li className="w-1/4 px-4 py-1 font-semibold">Role</li>
-          <li className="w-1/4 px-4 py-1 font-semibold">Actions</li>
+          <li className="w-1/4 px-4 py-1 rounded-md font-semibold">Name</li>
+          <li className="w-1/4 px-4 py-1 rounded-md font-semibold">Email</li>
+          <li className="w-1/4 px-4 py-1 rounded-md font-semibold">Role</li>
+          <li className="w-1/4 px-4 py-1 rounded-md font-semibold">Actions</li>
         </ul>
       </div>
       {users.map((user) => (
@@ -29,27 +34,52 @@ function Users({ users, loading, deleteUser }) {
           </span>
           <span className="w-3/4 flex">
             <input
-              className="w-1/4 px-4 py-1 font-semibold outline-none"
+              className={`w-1/4 px-4 py-1 rounded-md font-semibold outline-none ${
+                !user.edit ? "" : "border"
+              }`}
               type="text"
+              ref={nameRef}
+              name="name"
               defaultValue={user.name}
-              readOnly
+              readOnly={!user.edit}
             />
             <input
-              className="w-1/4 px-4 py-1 font-semibold outline-none"
-              type="text"
+              className={`w-1/4 px-4 py-1 rounded-md font-semibold outline-none ${
+                !user.edit ? "" : "border"
+              }`}
+              type="email"
+              ref={emailRef}
+              name="email"
               defaultValue={user.email}
-              readOnly
+              readOnly={!user.edit}
             />
             <input
-              className="w-1/4 px-4 py-1 font-semibold outline-none "
+              className={`w-1/4 px-4 py-1 rounded-md font-semibold outline-none ${
+                !user.edit ? "" : "border"
+              }`}
               type="text"
+              ref={roleRef}
+              name="role"
               defaultValue={user.role}
-              readOnly
+              readOnly={!user.edit}
             />
-            <span className="flex items-center px-4 text-xl text-gray-600 hover:text-blue-600 transition duration-300 cursor-pointer">
-              <FiEdit />
-            </span>
+            {!user.edit ? (
+              <span
+                onClick={() => editUser(user.id)}
+                className="flex items-center px-4 text-xl text-gray-600 hover:text-blue-600 transition duration-300 cursor-pointer"
+              >
+                <FiEdit />
+              </span>
+            ) : (
+              <span
+                onClick={() => saveUser(user.id, nameRef, emailRef, roleRef)}
+                className="flex items-center px-4 text-xl text-green-500 hover:text-green-600 transition duration-300 cursor-pointer"
+              >
+                <MdSave />
+              </span>
+            )}
             <span
+              onClick={() => deleteUser(user.id)}
               className="flex items-center px-4 text-red-500 text-2xl cursor-pointer hover:text-red-600 transition duration-300"
             >
               <MdDelete />

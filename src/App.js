@@ -16,15 +16,38 @@ function App() {
     const fetchData = async () => {
       setLoading(true);
       const response = await axios.get(API);
-      setUsers(response.data);
-      setResult(response.data)
+      const data = response.data.map((user) => {
+        user.selected = false;
+        user.edit = false;
+        return user;
+      });
+      setUsers(data);
+      setResult(data);
       setLoading(false);
     };
     fetchData();
   }, []);
 
+  const editUser = (id) => {
+    const index = result.findIndex((user) => user.id === id);
+    // result[index].edit = !result[index].edit;
+    // setResult(result);
+    setResult([...result, (result[index].edit = true)]);
+  };
+
+  const saveUser = (id, nameRef, emailRef, roleRef) => {
+    const index = result.findIndex((user) => user.id === id);
+    setResult([
+      ...result,
+      (result[index].name = nameRef.current.value),
+      (result[index].email = emailRef.current.value),
+      (result[index].role = roleRef.current.value),
+      (result[index].edit = false),
+    ]);
+  };
+  
   const deleteUser = (id) => {
-    setResult(result.filter((user) => user._id !== id));
+    setResult(result.filter((user) => user.id !== id));
   };
 
   const indexOfLastUser = currentPage * usersPerPage;
@@ -40,6 +63,8 @@ function App() {
         loading={loading}
         users={currentUsers}
         deleteUser={deleteUser}
+        editUser={editUser}
+        saveUser={saveUser}
       />
       <Pagination
         paginate={paginate}
