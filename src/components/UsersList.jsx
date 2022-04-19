@@ -33,10 +33,18 @@ function Users({
           />
         </span>
         <ul className="w-full md:w-3/4 flex text-sm md:text-base">
-          <li className="w-1/4 px-2 md:px-4 py-1 rounded-md font-semibold">Name</li>
-          <li className="w-1/4 px-2 md:px-4 py-1 rounded-md font-semibold">Email</li>
-          <li className="w-1/4 px-2 md:px-4 py-1 rounded-md font-semibold">Role</li>
-          <li className="w-1/4 px-2 md:px-4 py-1 rounded-md font-semibold">Actions</li>
+          <li className="w-1/4 px-2 md:px-4 py-1 rounded-md font-semibold">
+            Name
+          </li>
+          <li className="w-1/4 px-2 md:px-4 py-1 rounded-md font-semibold">
+            Email
+          </li>
+          <li className="w-1/4 px-2 md:px-4 py-1 rounded-md font-semibold">
+            Role
+          </li>
+          <li className="w-1/4 px-2 md:px-4 py-1 rounded-md font-semibold">
+            Actions
+          </li>
         </ul>
       </div>
       {users.length === 0 && (
@@ -103,12 +111,14 @@ function Users({
                 <MdSave />
               </span>
             )}
-            <span
-              onClick={() => deleteUser(user.id)}
-              className="flex items-center px-2 md:px-4 text-xl text-red-500 md:text-2xl cursor-pointer hover:text-red-600 transition duration-300"
-            >
-              <MdDelete />
-            </span>
+            {!user.edit && (
+              <span
+                onClick={() => deleteUser(user.id)}
+                className="flex items-center px-2 md:px-4 text-xl text-red-500 md:text-2xl cursor-pointer hover:text-red-600 transition duration-300"
+              >
+                <MdDelete />
+              </span>
+            )}
           </span>
         </div>
       ))}
