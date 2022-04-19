@@ -61,7 +61,6 @@ function App() {
     }));
     let temp2 = result.slice(usersPerPage, result.length);
     setResult([...temp, ...temp2]);
-    console.log(selectAllRef.current.checked);
   };
 
   const deleteSelectedUser = () => {

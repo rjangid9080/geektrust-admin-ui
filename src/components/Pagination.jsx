@@ -13,14 +13,14 @@ function Pagination({ usersPerPage, totalUsers, paginate }) {
     pages.push(i);
   }
   return (
-    <div className="w-full flex justify-center items-center p-2 font-semibold text-sm">
+    <div className="w-full flex justify-center items-center p-2 font-semibold text-xs md:text-sm">
       <button
         disabled={activePage === 1}
         onClick={() => {
           setActivePage(1);
           paginate(1);
         }}
-        className={`p-2 mx-2 h-10 w-10 rounded-md ${
+        className={`p-2 mx-1 md:mx-2 h-8 w-8 md:h-10 md:w-10 rounded-md ${
           activePage > 1
             ? `hover:bg-blue-500 hover:text-white hover:shadow-md cursor-pointer`
             : "opacity-50"
@@ -34,11 +34,11 @@ function Pagination({ usersPerPage, totalUsers, paginate }) {
           paginate(activePage - 1);
           setActivePage(activePage - 1);
         }}
-        className={`mx-2 p-2 h-10 rounded-md ${
+        className={`p-2 mx-1 md:mx-2 h-8 md:h-10 rounded-md ${
           activePage > 1
             ? `hover:bg-blue-500 hover:text-white hover:shadow-md cursor-pointer`
             : "opacity-50"
-        } flex justify-center items-center  transition duration-300 font-semibold text-sm`}
+        } flex justify-center items-center  transition duration-300 font-semibold text-xs md:text-sm`}
       >
         <FaAngleLeft />
         Prev
@@ -52,7 +52,7 @@ function Pagination({ usersPerPage, totalUsers, paginate }) {
           }}
           className={`${
             activePage === page ? "bg-blue-500 text-white shadow-md" : ""
-          } p-2 mx-2 h-10 w-10 flex justify-center items-center rounded-md hover:border-blue-500 hover:border hover:shadow-md cursor-pointer transition duration-300`}
+          } p-2 mx-1 md:mx-2 h-8 w-8 md:h-10 md:w-10 flex justify-center items-center rounded-md hover:border-blue-500 hover:border hover:shadow-md cursor-pointer transition duration-300`}
         >
           {page}
         </span>
@@ -63,11 +63,11 @@ function Pagination({ usersPerPage, totalUsers, paginate }) {
           paginate(activePage + 1);
           setActivePage(activePage + 1);
         }}
-        className={`mx-2 p-2 h-10 rounded-md ${
+        className={`mx-1 md:mx-2 p-2 h-8 md:h-10 rounded-md ${
           activePage < pages.length
             ? `hover:bg-blue-500 hover:text-white hover:shadow-md cursor-pointer`
             : "opacity-50"
-        } flex justify-center items-center  transition duration-300 font-semibold text-sm`}
+        } flex justify-center items-center  transition duration-300 font-semibold text-xs md:text-sm`}
       >
         Next
         <FaAngleRight />
@@ -78,7 +78,7 @@ function Pagination({ usersPerPage, totalUsers, paginate }) {
           setActivePage(pages.length);
           paginate(pages.length);
         }}
-        className={`mx-2 p-2 h-10 w-10 rounded-md ${
+        className={`mx-1 md:mx-2 p-2 h-10 w-10 rounded-md ${
           activePage < pages.length
             ? `hover:bg-blue-500 hover:text-white hover:shadow-md cursor-pointer`
             : "opacity-50"
