@@ -32,6 +32,7 @@ function App() {
     const index = result.findIndex((user) => user.id === id);
     result[index].edit = !result[index].edit;
     setResult([...result]);
+    setUsers([...result]);
   };
 
   const saveUser = (id, nameRef, emailRef, roleRef) => {
@@ -41,10 +42,12 @@ function App() {
     result[index].role = roleRef.current.value;
     result[index].edit = false;
     setResult([...result]);
+    setUsers([...result]);
   };
 
   const deleteUser = (id) => {
     setResult(result.filter((user) => user.id !== id));
+    setUsers(result.filter((user) => user.id !== id));
     selectAllRef.current.checked = false;
   };
 
@@ -52,6 +55,7 @@ function App() {
     const index = result.findIndex((user) => user.id === id);
     result[index].selected = !result[index].selected;
     setResult([...result]);
+    setUsers([...result]);
   };
 
   const selectAll = () => {
@@ -61,13 +65,16 @@ function App() {
     }));
     let temp2 = result.slice(usersPerPage, result.length);
     setResult([...temp, ...temp2]);
+    setUsers([...temp, ...temp2]);
   };
 
   const deleteSelectedUser = () => {
     if (selectAllRef.current.checked) {
       selectAllRef.current.checked = false;
     }
-    setResult(result.filter((user) => user.selected === false));
+    const temp = result.filter((user) => user.selected === false);
+    setResult([...temp]);
+    setUsers([...temp]);
   };
 
   const indexOfLastUser = currentPage * usersPerPage;
