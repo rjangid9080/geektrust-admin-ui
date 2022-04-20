@@ -46,3 +46,13 @@ https://geektrust.s3-ap-southeast-1.amazonaws.com/adminui-problem/members.json
 ### Solved UI :
 ![Screenshot 2022-04-20 173028](https://user-images.githubusercontent.com/43642227/164227116-0b63c2a4-048c-4c3f-9347-3d22b6d2b012.png)
 
+### Developing
+This repo uses [pnpm](https://pnpm.io/) , to install it ...
+```
+npm install -g pnpm 
+```
+...then install dependencies
+```
+pnpm install
+```
+to run Geektrust_Admin_UI on your local host using `pnpm start`
