@@ -148,8 +148,8 @@ function Users({
               <button
                 disabled={!name || !email || !role ? true : false}
                 onClick={() => saveUser(user.id, name, email, role)}
-                className={`flex items-center px-2 md:px-4 text-lg md:text-xl text-green-500 hover:text-green-600 transition duration-300 cursor-pointer ${
-                  !name || !email || !role ? `opacity-50` : ""
+                className={`flex items-center px-2 md:px-4 text-lg md:text-xl text-green-500 hover:text-green-600 transition duration-300 ${
+                  !name || !email || !role ? `opacity-50 cursor-no-drop` : "cursor-pointer"
                 }`}
               >
                 <MdSave />
