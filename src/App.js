@@ -37,10 +37,6 @@ function App() {
   }, []);
 
   const editUser = (id) => {
-    let editableUsers = result.filter((user) => user.edit === true);
-    if (editableUsers.length > 0) {
-      return window.alert("Please Save User First !...");
-    }
     let index = result.findIndex((user) => user.id === id);
     result[index].edit = !result[index].edit;
     setResult([...result]);
