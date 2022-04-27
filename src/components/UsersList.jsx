@@ -138,7 +138,7 @@ function Users({
                 }}
                 className={`flex items-center px-2 md:px-4 text-lg md:text-xl text-gray-600  transition duration-300  ${
                   isEditUserOpen
-                    ? "opacity-50"
+                    ? "opacity-50 cursor-no-drop"
                     : "hover:text-blue-600 cursor-pointer"
                 }`}
               >
