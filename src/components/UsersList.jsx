@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useState, useRef } from "react";
 import Loader from "./Loader";
 import { FiEdit } from "react-icons/fi";
 import { MdDelete, MdSave } from "react-icons/md";
@@ -14,9 +14,12 @@ function Users({
   selectAll,
   selectAllRef,
 }) {
-  const nameRef = useRef(null);
-  const emailRef = useRef(null);
-  const roleRef = useRef(null);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [role, setRole] = useState("");
+  // const nameRef = useRef(null);
+  // const emailRef = useRef(null);
+  // const roleRef = useRef(null);
 
   if (loading) {
     return <Loader />;
@@ -71,8 +74,9 @@ function Users({
                 !user.edit ? "" : "border"
               }`}
               type="text"
-              ref={nameRef}
+              // ref={nameRef}
               name="name"
+              onChange={(e) => setName(e.target.value)}
               defaultValue={user.name}
               readOnly={!user.edit}
             />
@@ -81,8 +85,9 @@ function Users({
                 !user.edit ? "" : "border"
               }`}
               type="email"
-              ref={emailRef}
+              // ref={emailRef}
               name="email"
+              onChange={(e) => setEmail(e.target.value)}
               defaultValue={user.email}
               readOnly={!user.edit}
             />
@@ -91,8 +96,9 @@ function Users({
                 !user.edit ? "" : "border"
               }`}
               type="text"
-              ref={roleRef}
+              // ref={roleRef}
               name="role"
+              onChange={(e) => setRole(e.target.value)}
               defaultValue={user.role}
               readOnly={!user.edit}
             />
@@ -105,7 +111,7 @@ function Users({
               </span>
             ) : (
               <span
-                onClick={() => saveUser(user.id, nameRef, emailRef, roleRef)}
+                onClick={() => saveUser(user.id, name, email, role)}
                 className="flex items-center px-2 md:px-4 text-lg md:text-xl text-green-500 hover:text-green-600 transition duration-300 cursor-pointer"
               >
                 <MdSave />

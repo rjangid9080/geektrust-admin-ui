@@ -9,37 +9,49 @@ function App() {
   const [users, setUsers] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [result, setResult] = useState([]);
+  const [isError, setIsError] = useState(false);
+  const [errMsg, setErrMsg] = useState("");
   const usersPerPage = 10;
   const selectAllRef = useRef(null);
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true);
-      const response = await axios.get(API);
-      const data = response.data.map((user) => {
-        user.selected = false;
-        user.edit = false;
-        return user;
-      });
-      setUsers(data);
-      setResult(data);
-      setLoading(false);
+      try {
+        setLoading(true);
+        const response = await axios.get(API);
+        const data = response.data.map((user) => {
+          user.selected = false;
+          user.edit = false;
+          return user;
+        });
+        setUsers(data);
+        setResult(data);
+        setLoading(false);
+      } catch (error) {
+        setLoading(false);
+        setErrMsg(error.message);
+        setIsError(true);
+      }
     };
     fetchData();
   }, []);
 
   const editUser = (id) => {
-    const index = result.findIndex((user) => user.id === id);
+    let editableUsers = result.filter((user) => user.edit === true);
+    if (editableUsers.length > 0) {
+      return window.alert("Please Save User First !...");
+    }
+    let index = result.findIndex((user) => user.id === id);
     result[index].edit = !result[index].edit;
     setResult([...result]);
     setUsers([...result]);
   };
 
-  const saveUser = (id, nameRef, emailRef, roleRef) => {
+  const saveUser = (id, name, email, role) => {
     const index = result.findIndex((user) => user.id === id);
-    result[index].name = nameRef.current.value;
-    result[index].email = emailRef.current.value;
-    result[index].role = roleRef.current.value;
+    result[index].name = name;
+    result[index].email = email;
+    result[index].role = role;
     result[index].edit = false;
     setResult([...result]);
     setUsers([...result]);
@@ -59,10 +71,17 @@ function App() {
   };
 
   const selectAll = () => {
-    let temp = result.slice(0, usersPerPage).map((user) => ({
-      ...user,
-      selected: true,
-    }));
+    let temp = result.slice(0, usersPerPage).map((user) =>
+      selectAllRef.current.checked
+        ? {
+            ...user,
+            selected: true,
+          }
+        : {
+            ...user,
+            selected: false,
+          }
+    );
     let temp2 = result.slice(usersPerPage, result.length);
     setResult([...temp, ...temp2]);
     setUsers([...temp, ...temp2]);
@@ -83,6 +102,14 @@ function App() {
 
   //Paginate
   const paginate = (page) => setCurrentPage(page);
+
+  if (isError) {
+    return (
+      <div className="min-h-screen font-semibold flex justify-center items-center text-red-500">
+        {errMsg}
+      </div>
+    );
+  }
   return (
     <div className="w-full flex flex-col items-center">
       <Search users={users} setSearchResult={setResult} />
