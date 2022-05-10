@@ -19,6 +19,7 @@ function App() {
       try {
         setLoading(true);
         const response = await axios.get(API);
+        console.log(response);
         const data = response.data.map((user) => {
           user.selected = false;
           user.edit = false;
@@ -61,7 +62,7 @@ function App() {
 
   const selectUser = (id) => {
     const index = result.findIndex((user) => user.id === id);
-    result[index].selected = !result[index].selected;
+    result[index].selected = !result[index].selected; //false to true
     setResult([...result]);
     setUsers([...result]);
   };
@@ -92,6 +93,30 @@ function App() {
     setUsers([...temp]);
   };
 
+  const sortByNameAscending = () => {
+    const sortedUsers = result.sort(function (a, b) {
+      if (a.name < b.name) {
+        return -1;
+      }
+      if (a.name > b.name) {
+        return 1;
+      }
+      return 0;
+    });
+    setResult([...sortedUsers]);
+  };
+  const sortByNameDecending = () => {
+    const sortedUsers = result.sort(function (a, b) {
+      if (a.name < b.name) {
+        return 1;
+      }
+      if (a.name > b.name) {
+        return -1;
+      }
+      return 0;
+    });
+    setResult([...sortedUsers]);
+  };
   const indexOfLastUser = currentPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
   const currentUsers = result.slice(indexOfFirstUser, indexOfLastUser);
@@ -119,6 +144,8 @@ function App() {
         deleteSelectedUser={deleteSelectedUser}
         selectAll={selectAll}
         selectAllRef={selectAllRef}
+        sortByNameAscending={sortByNameAscending}
+        sortByNameDecending={sortByNameDecending}
       />
 
       <Pagination

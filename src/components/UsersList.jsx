@@ -2,6 +2,10 @@ import { useState, useEffect } from "react";
 import Loader from "./Loader";
 import { FiEdit } from "react-icons/fi";
 import { MdDelete, MdSave } from "react-icons/md";
+import {
+  AiOutlineSortAscending,
+  AiOutlineSortDescending,
+} from "react-icons/ai";
 
 function Users({
   users,
@@ -13,11 +17,15 @@ function Users({
   deleteSelectedUser,
   selectAll,
   selectAllRef,
+  sortByNameAscending,
+  sortByNameDecending,
 }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("");
   const [isEditUserOpen, setIsEditUserOpen] = useState(false);
+  const [isSorted, setIsSorted] = useState(false);
+  const [isAscending, setIsAscending] = useState(false);
 
   useEffect(() => {
     let isEditUser = users.filter((user) => user.edit);
@@ -30,6 +38,7 @@ function Users({
   if (loading) {
     return <Loader />;
   }
+
   return (
     <section className="w-[90%] min-h-[580px]">
       <div className="w-full flex p-2 shadow-md mt-2 text-blue-600">
@@ -42,8 +51,21 @@ function Users({
           />
         </span>
         <ul className="w-full md:w-3/4 flex text-sm md:text-base">
-          <li className="w-1/4 px-2 md:px-4 py-1 rounded-md font-semibold">
-            Name
+          <li
+            className="w-1/4 px-2 flex md:px-4 py-1 rounded-md font-semibold hover:cursor-pointer"
+            onClick={() => {
+              setIsSorted(true);
+              if (!isAscending) {
+                sortByNameAscending();
+                setIsAscending(true);
+              } else {
+                sortByNameDecending();
+                setIsAscending(false);
+              }
+            }}
+          >
+            Name {isSorted && isAscending && <AiOutlineSortAscending />}
+            {isSorted && !isAscending && <AiOutlineSortDescending />}
           </li>
           <li className="w-1/4 px-2 md:px-4 py-1 rounded-md font-semibold">
             Email
@@ -149,7 +171,9 @@ function Users({
                 disabled={!name || !email || !role ? true : false}
                 onClick={() => saveUser(user.id, name, email, role)}
                 className={`flex items-center px-2 md:px-4 text-lg md:text-xl text-green-500 hover:text-green-600 transition duration-300 ${
-                  !name || !email || !role ? `opacity-50 cursor-no-drop` : "cursor-pointer"
+                  !name || !email || !role
+                    ? `opacity-50 cursor-no-drop`
+                    : "cursor-pointer"
                 }`}
               >
                 <MdSave />
