@@ -19,7 +19,6 @@ function App() {
       try {
         setLoading(true);
         const response = await axios.get(API);
-        console.log(response);
         const data = response.data.map((user) => {
           user.selected = false;
           user.edit = false;
