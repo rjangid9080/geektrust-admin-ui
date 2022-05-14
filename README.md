@@ -56,3 +56,5 @@ npm install -g pnpm
 pnpm install
 ```
 to run Geektrust_Admin_UI on your local host using `pnpm start`
+### Additional Feature
+When you click on Name then the users sorted by name in ascending manner and on another click it sorted descending.
